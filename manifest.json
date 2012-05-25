@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "name": "4628 Checker",
+  "content_scripts": [
+    {
+      "matches": ["http://www.4628.jp/*", "https://www.4628.jp/*"],
+      "js": ["jquery.min.js", "4628.js"]
+    }
+  ]
+}

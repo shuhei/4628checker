@@ -52,13 +52,15 @@ $.fn.extend({
           comment = values[17];
       // Check if it's after today.
       if (now < current.withDate(date)) return;
+      // Check vacation
+      if (calendar.match(/休日/) && notification !== '休日出勤') return;
+      if (notification.match(/(休暇|振休|有休|計画年休)/)) return;
       
-      if (notification === '有休' || notification.contains('休暇')) return;
-      
-      if (!status.contains('直行') && arrival === null) {
+      // Check arrival and departure
+      if (!status.match(/(直行|出張)/) && arrival === null) {
         $(this).find('td:nth-child(7)').alert();
       }
-      if (!status.contains('直帰') && departure === null) {
+      if (!status.match(/(直帰|出張)/) && departure === null) {
         $(this).find('td:nth-child(8)').alert();
       }
       
@@ -66,18 +68,25 @@ $.fn.extend({
         var reasons = [];
         if (status.contains('直行')) reasons.push('直行');
         if (status.contains('直帰')) reasons.push('直行');
-        if (notification === '午前半休') {
-          // TODO Should we come by 1pm?
-          if (arrival !== null && arrival > 13 * 60) reasons.push('午前半休で遅刻');
+        if (status.contains('出張')) reasons.push('出張');
+        
+        if (status.contains('休日出勤')) {
+          reasons.push('休日出勤');
         } else {
-          if (arrival !== null && arrival > 9 * 60) reasons.push('遅刻');
-        }
-        if (notification === '午後半休') {
-          // TODO Can we go home at 12pm?
-          if (departure !== null && departure < 12 * 60) reasons.push('午後半休で早退');
-        } else {
-          if (departure !== null && departure < 17 * 60 + 15) reasons.push('早退');
-          if (departure !== null && departure > 17 * 60 + 30) reasons.push('居残り');
+          // Check arrival time and departure time
+          if (notification === '午前半休') {
+            // TODO Should we come by 1pm?
+            if (arrival !== null && arrival > 13 * 60) reasons.push('午前半休で遅刻');
+          } else {
+            if (arrival !== null && arrival > 9 * 60) reasons.push('遅刻');
+          }
+          if (notification === '午後半休') {
+            // TODO Can we go home at 12pm?
+            if (departure !== null && departure < 12 * 60) reasons.push('午後半休で早退');
+          } else {
+            if (departure !== null && departure < 17 * 60 + 15) reasons.push('早退');
+            if (departure !== null && departure > 17 * 60 + 30) reasons.push('居残り');
+          }
         }
         
         if (comment === '' || comment.split('、').length < reasons.length) {
@@ -94,5 +103,4 @@ $.fn.extend({
   }
 });
 
-//$('#submit_form0 > table.txt_12').find('tbody > .bgcolor_white, tbody > .bgcolor_yasumi_blue, tbody > .bgcolor_yasumi_red').checkWork();
-$('#submit_form0 > table.txt_12').find('tbody > .bgcolor_white').checkWork();
+$('#submit_form0 > table.txt_12 > tbody').children('.bgcolor_white, .bgcolor_yasumi_blue, .bgcolor_yasumi_red').checkWork();

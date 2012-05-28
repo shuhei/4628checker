@@ -67,7 +67,7 @@ $.fn.extend({
       if (check === '1') {
         var reasons = [];
         if (status.contains('直行')) reasons.push('直行');
-        if (status.contains('直帰')) reasons.push('直行');
+        if (status.contains('直帰')) reasons.push('直帰');
         if (status.contains('出張')) reasons.push('出張');
         
         if (status.contains('休日出勤')) {

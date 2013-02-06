@@ -4,5 +4,6 @@
 
 ## インストール方法
 
-Tools -> Extensions を開き、Developer mode になっていなかったらします。Load unpacked extension ボタンを押して、このレポジトリのフォルダを指定します。
-
+1. Tools -> Extensions を開きます。
+2. Developer mode のチェックが入っていなければ、チェックします。
+3. Load unpacked extension... ボタンを押して、このレポジトリのフォルダを指定します。

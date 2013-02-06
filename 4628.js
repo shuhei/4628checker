@@ -2,10 +2,6 @@ $.extend(String.prototype, {
   contains: function(word) {
     return this.indexOf(word) !== -1;
   },
-  trim: function() {
-    var nbsp = String.fromCharCode(160);
-    return this.replace(nbsp, '');
-  },
   minutes: function() {
     var values = this.split(':');
     if (values.length !== 2) {

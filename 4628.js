@@ -22,7 +22,7 @@ $.fn.extend({
         withDate: function(date) {
           var m = this.month - 1;
           if (date <= 20) m++;
-          return new Date(this.year, m, date).getTime();
+          return new Date(this.year, m, date);
         },
         dateString: function(date) {
           var d = this.withDate(date);
@@ -51,7 +51,7 @@ $.fn.extend({
           check = values[16],
           comment = values[17];
       // Check if it's after today.
-      if (now < current.withDate(date)) return;
+      if (now < current.withDate(date).getTime()) return;
       // Check vacation
       if (calendar.match(/休日/) && notification !== '休日出勤') return;
       if (notification.match(/(休暇|振休|有休|計画年休)/)) return;

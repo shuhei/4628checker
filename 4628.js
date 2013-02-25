@@ -71,14 +71,12 @@ $.fn.extend({
         } else {
           // Check arrival time and departure time
           if (notification === '午前半休') {
-            // TODO Should we come by 1pm?
-            if (arrival !== null && arrival > 13 * 60) reasons.push('午前半休で遅刻');
+            if (arrival !== null && arrival > 13 * 60 + 30) reasons.push('午前半休で遅刻');
           } else {
             if (arrival !== null && arrival > 9 * 60) reasons.push('遅刻');
           }
           if (notification === '午後半休') {
-            // TODO Can we go home at 12pm?
-            if (departure !== null && departure < 12 * 60) reasons.push('午後半休で早退');
+            if (departure !== null && departure < 12 * 60 + 45) reasons.push('午後半休で早退');
           } else {
             if (departure !== null && departure < 17 * 60 + 15) reasons.push('早退');
             if (departure !== null && departure > 17 * 60 + 30) reasons.push('居残り');

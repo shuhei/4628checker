@@ -89,7 +89,7 @@ $.fn.extend({
         
         if (comment === '' || comment.split('、').length < reasons.length) {
           var message = reasons.join(', ');
-          console.log(current.dateString(date) + ': ' + message);
+          console.log(current.dateString(date) + ': 「' + message + '」が必要ですが「' + comment + '」でした。');
           var $message = $('<span />').text(message).css({ backgroundColor: '#fff', padding: '0 10px' });
           $(this).find('td:nth-child(18)').alert().append($message);
         }

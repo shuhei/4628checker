@@ -23,6 +23,10 @@ $.fn.extend({
           var m = this.month - 1;
           if (date <= 20) m++;
           return new Date(this.year, m, date).getTime();
+        },
+        dateString: function(date) {
+          var d = this.withDate(date);
+          return (d.getMonth() + 1) + '/' + d.getDate();
         }
       };
     })();
@@ -85,7 +89,7 @@ $.fn.extend({
         
         if (comment === '' || comment.split('、').length < reasons.length) {
           var message = reasons.join(', ');
-          console.log(current.month + '/' + date + ': ' + message);
+          console.log(current.dateString(date) + ': ' + message);
           var $message = $('<span />').text(message).css({ backgroundColor: '#fff', padding: '0 10px' });
           $(this).find('td:nth-child(18)').alert().append($message);
         }

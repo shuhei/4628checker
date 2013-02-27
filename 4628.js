@@ -54,9 +54,9 @@ $.fn.extend({
           comment = values[17];
       // 今日以降はチェックしない。
       if (now < current.withDate(date).getTime()) return;
-      // 休日はチェックしない。
+      // 振休以外の休日はチェックしない。
       if (calendar.match(/休日/) && notification !== '休日出勤') return;
-      if (notification.match(/(休暇|振休|有休|計画年休)/)) return;
+      if (notification.match(/(休暇|有休|計画年休)/)) return;
       
       // 出社時刻と退社時刻が打刻されていなければ、警告。
       if (!status.match(/(直行|出張)/) && arrival === null) {
@@ -75,6 +75,8 @@ $.fn.extend({
         
         if (notification.contains('休日出勤')) {
           reasons.push('休日出勤');
+        } else if (notification.contains('振休')) {
+          reasons.push('振休');
         } else {
           // 出社時刻を確認。
           if (notification === '午前半休') {

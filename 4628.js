@@ -33,10 +33,12 @@ $.fn.extend({
     
     var now = new Date().getTime();
     
+    // テーブルの各行をチェック。
     $(this).each(function() {
       var values = $(this).find('td').map(function() {
         return $(this).text().trim();
       }).get();
+      // テーブルの各セルの値。
       var date = values[0],
           day = values[1],
           calendar = values[2],
@@ -50,13 +52,13 @@ $.fn.extend({
           midnight = values[11].minutes(),
           check = values[16],
           comment = values[17];
-      // Check if it's after today.
+      // 今日以降はチェックしない。
       if (now < current.withDate(date).getTime()) return;
-      // Check vacation
+      // 休日はチェックしない。
       if (calendar.match(/休日/) && notification !== '休日出勤') return;
       if (notification.match(/(休暇|振休|有休|計画年休)/)) return;
       
-      // Check arrival and departure
+      // 出社時刻と退社時刻が打刻されていなければ、警告。
       if (!status.match(/(直行|出張)/) && arrival === null) {
         $(this).find('td:nth-child(7)').alert();
       }
@@ -65,6 +67,7 @@ $.fn.extend({
       }
       
       if (check === '1') {
+        // 備考欄に書く理由をリストアップ。
         var reasons = [];
         if (status.contains('直行')) reasons.push('直行');
         if (status.contains('直帰')) reasons.push('直帰');
@@ -73,12 +76,13 @@ $.fn.extend({
         if (status.contains('休日出勤')) {
           reasons.push('休日出勤');
         } else {
-          // Check arrival time and departure time
+          // 出社時刻を確認。
           if (notification === '午前半休') {
             if (arrival !== null && arrival > 13 * 60 + 30) reasons.push('午前半休で遅刻');
           } else {
             if (arrival !== null && arrival > 9 * 60) reasons.push('遅刻');
           }
+          // 退社時刻を確認。
           if (notification === '午後半休') {
             if (departure !== null && departure < 12 * 60 + 45) reasons.push('午後半休で早退');
           } else {
@@ -87,6 +91,7 @@ $.fn.extend({
           }
         }
         
+        // 備考欄をチェック。警告を表示。
         if (comment === '' || comment.split('、').length < reasons.length) {
           var message = reasons.join(', ');
           console.log(current.dateString(date) + ': 「' + message + '」が必要ですが「' + comment + '」でした。');
@@ -96,6 +101,7 @@ $.fn.extend({
       }
     });
   },
+  // セルを赤くして警告。
   alert: function() {
     return $(this).css({ backgroundColor: '#f33' });
   }

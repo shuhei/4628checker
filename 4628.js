@@ -73,7 +73,7 @@ $.fn.extend({
         if (status.contains('直帰')) reasons.push('直帰');
         if (status.contains('出張')) reasons.push('出張');
         
-        if (status.contains('休日出勤')) {
+        if (notification.contains('休日出勤')) {
           reasons.push('休日出勤');
         } else {
           // 出社時刻を確認。

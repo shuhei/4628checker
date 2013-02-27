@@ -59,10 +59,10 @@ $.fn.extend({
       if (notification.match(/(休暇|有休|計画年休)/)) return;
       
       // 出社時刻と退社時刻が打刻されていなければ、警告。
-      if (!status.match(/(直行|出張)/) && arrival === null) {
+      if (!status.match(/(直行|出張)/) && arrival === null && !notification.contains('振休')) {
         $(this).find('td:nth-child(7)').alert();
       }
-      if (!status.match(/(直帰|出張)/) && departure === null) {
+      if (!status.match(/(直帰|出張)/) && departure === null && !notification.contains('振休')) {
         $(this).find('td:nth-child(8)').alert();
       }
       

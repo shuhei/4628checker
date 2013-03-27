@@ -97,15 +97,19 @@ $.fn.extend({
         if (comment === '' || comment.split('、').length < reasons.length) {
           var message = reasons.join(', ');
           console.log(current.dateString(date) + ': 「' + message + '」が必要ですが「' + comment + '」でした。');
-          var $message = $('<span />').text(message).css({ backgroundColor: '#fff', padding: '0 10px' });
-          $(this).find('td:nth-child(18)').alert().append($message);
+          $(this).find('td:nth-child(18)').alert(message);
         }
       }
     });
   },
   // セルを赤くして警告。
-  alert: function() {
-    return $(this).css({ backgroundColor: '#f33' });
+  alert: function(message) {
+    this.css({ backgroundColor: '#f33' });
+    if (typeof message === 'string') {
+      var $message = $('<span />').text(message).css({ backgroundColor: '#fff', padding: '0 10px' });
+      this.append($message);
+    }
+    return this;
   }
 });
 

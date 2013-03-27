@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "1.0.6",
+  "version": "1.0.7",
   "name": "4628 Checker",
   "description": "万屋一家シリーズの勤怠管理システム 勤之助ver.2 の出勤簿をチェックする非公式 Chrome 拡張です。",
   "content_scripts": [
